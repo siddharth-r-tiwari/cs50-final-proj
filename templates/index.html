@@ -2,20 +2,41 @@
 
 <html lang="en">
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@800&display=swap" rel="stylesheet">
         <link href="/static/styles.css" rel="stylesheet">
         <link href="/static/favicon.ico" rel="icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
         <h1>Essence</h1>
+        <nav>
+            <a href="/">Essence</a> |
+            <a href="/about.html">About</a>
+        </nav>
+        <h2>Instructions:</h2>
         <h2>Parameters:</h2>
-        <form>
+        <form action="/" method="post">
             <label for="date_start">Date (Start):</label>
             <input type="date" id="date_start" name="date_start" required autocomplete="off"><br><br>
             <label for="date_end">Date (End):</label>
             <input type="date" id="date_end" name="date_end" required autocomplete="off"><br><br>
             <label for="url">URL: </label>
-            <input type="url" id="url" id="url" required autocomplete="off"><br><br>
+            <input type="url" id="url" name="url" required autocomplete="off"><br><br>
+            <input type="submit">
         </form>
+
+        <p>Date: {{query.date_start}}-{{query.date_end}}</p>
+        <p>URL: {{query.url}}</p>
+        <p>Request: {{query.request}}</p>
+        <p>Response: {{query.response}}</p>
+
+        <canvas id="results" width="200" height="100"></canvas>
+        <script src="{{url_for('static', filename='scripts.js')}}"></script>
+        <script>
+            getPythonParameters()
+        </script>
     </body>
 </html>

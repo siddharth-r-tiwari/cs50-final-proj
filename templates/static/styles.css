@@ -1,0 +1,13 @@
+body{
+    font-family: 'Libre Franklin', sans-serif;
+    margin: auto;
+    text-align:center;
+}
+
+h1{
+    font-size: 80px;    
+}
+
+a{
+    text-decoration:none;
+}

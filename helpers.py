@@ -2,6 +2,7 @@ import urllib
 import requests
 import datetime
 from bs4 import BeautifulSoup
+import numpy
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 nltk.download('vader_lexicon')
@@ -32,8 +33,8 @@ def get_snapshoturl(request):
         return request.json()["archived_snapshots"]["closest"]["url"]
     return False
 
-#def getSnapshotAccuracy(request):
-#    return request.json()["archived_snapshots"]["closest"]["timestamp"]
+def get_snapshotdate(request):
+    return request.json()["archived_snapshots"]["closest"]["timestamp"]
 
 #def WBMtoDT(date):
 #    return datetime.datetime.strptime(date, "%Y%m%d%H%M%S")
@@ -59,13 +60,16 @@ def get_text(html):
         for item in page.find_all(tag):
             if len(item.get_text()) > 10 and (not("The Archive Team" in item.get_text()) or not ("Wayback Machine" in item.get_text()) or not ("Panic Downloads" in item.get_text())):
                 text.append(item.get_text())
+    text.sort(key=len, reverse=True)
     return text
+
 
 def get_sentiments(text):
     sia = SentimentIntensityAnalyzer()
     sentiments = []
 
     for phrase in text:
+        #if(sia.polarity_scores(phrase)['compound']):
         sentiments.append(sia.polarity_scores(phrase)['compound'])
 
     return sentiments
@@ -73,3 +77,4 @@ def get_sentiments(text):
 def get_topics(text):
 
     return topics
+

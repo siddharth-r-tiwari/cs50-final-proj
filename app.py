@@ -25,11 +25,12 @@ def about():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    query = {'date_start': 0, 'date_end': 0, 'url': 0, 'request':0, 'response': 0}
+    query = {'date_start': 0, 'date_end': 0, 'date_accuracy': 0, 'url': 0, 'request':0, 'response': 0}
 
     if request.method == "POST":
         query['date_start'] = get_dtSTEP(request.form.get("date_start"))
         query['date_end'] = get_dtSTEP(request.form.get("date_end"))
+        query['n'] = request.form.get("n")
         query['url']  = request.form.get("url")
         
         rq = call_api(query['url'], query['date_start'])
@@ -46,15 +47,14 @@ def index():
                 query['response'] = "No Snapshot URL returned"
             
             else:
+                query['date_accuracy'] = get_snapshotdate(rq)
                 html = get_HTML(snapshotUrl)
                 text = get_text(html)
-                query['response'] = get_sentiments(text)
-       
-        #get website scrapes
-        
-        #obtain colors
+                sentiments = get_sentiments(text)
+                query['response'] = [len(phrase) for phrase in text] + sentiments
 
-        #obtain sentiments
+                #https://stackoverflow.com/questions/72076666/create-a-dictionary-from-multiple-lists-one-list-as-key-other-as-value
+       
 
     return render_template("index.html", query=query)
 

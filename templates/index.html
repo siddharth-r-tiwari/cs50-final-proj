@@ -5,35 +5,54 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@800&display=swap" rel="stylesheet">
-        <link href="/static/styles.css" rel="stylesheet">
-        <link href="/static/favicon.ico" rel="icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+        <link href="/static/favicon.ico" rel="icon">
     </head>
 
     <body>
-        <h1>Essence</h1>
-        <nav>
-            <a href="/">Essence</a> |
-            <a href="/about.html">About</a>
-        </nav>
-        <h2>Instructions:</h2>
-        <h2>Parameters:</h2>
-        <form action="/" method="post">
-            <label for="date_start">Date (Start):</label>
-            <input type="date" id="date_start" name="date_start" required autocomplete="off"><br><br>
-            <label for="date_end">Date (End):</label>
-            <input type="date" id="date_end" name="date_end" required autocomplete="off"><br><br>
-            <label for="url">URL: </label>
-            <input type="url" id="url" name="url" required autocomplete="off"><br><br>
-            <input type="submit">
-        </form>
+        <div class="col-lg-4 position-fixed one text-right p-5">
+            <h1>Essence</h1>
+            <nav>
+                <a href="/">The Program</a> |
+                <a href="/about.html">About</a>
+            </nav>
+            <h3>Instructions:</h3>
+            <p>Select from a set of 10 news-sites and input a past date range (start date and end date) and number of steps to visualize the news-sites' tone and topics, over time.</p>
+            <h3>Parameters:</h3>
+            <form action="/" method="post">
+                <label for="date_start">Date (Start):</label>
+                <input type="date" id="date_start" name="date_start" required autocomplete="off"><br><br>
+                <label for="date_end">Date (End):</label>
+                <input type="date" id="date_end" name="date_end" required autocomplete="off"><br><br>
+                <label for="n">Steps:</label>
+                <input type="number" id="n" name="n" required autocomplete="off"><br><br>
+                <label for="url">URL: </label>
+                <input type="url" id="url" name="url" required autocomplete="off"><br><br>
+                <input type="submit">
+            </form>
+        </div>
+        <div class="col-lg-auto offset-lg-4 two p-5 text-center">
+            <h2>Results: </h2>
+            <div class="container p-2">
+                <button onclick="drawSAEye()">Bullseye</button>
+                <button onclick="drawSABeads();">Beads</button>
+                <button>Topics</button>
+            </div>
+            <canvas id="results" width="500" height="500"></canvas>
+            <p id="topics"></p>
+            <h4>Query Details</h4>
+            <p>Date Range: {{query.date_start}}-{{query.date_end}}</p>
+            <p>Steps: {{query.n}}</p>
+            <p>URL: {{query.url}}</p>
+            <p>Request: {{query.request}}</p>
+            <p>API Returned Dates: {{query.date_accuracy}}</p>
+            <p>Response: {{query.response}}</p>
 
-        <p>Date: {{query.date_start}}-{{query.date_end}}</p>
-        <p>URL: {{query.url}}</p>
-        <p>Request: {{query.request}}</p>
-        <p>Response: {{query.response}}</p>
+        </div>
 
-        <canvas id="results" width="200" height="100"></canvas>
         <script src="{{url_for('static', filename='scripts.js')}}"></script>
         <script>
             getPythonParameters()

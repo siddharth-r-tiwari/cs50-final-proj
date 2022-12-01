@@ -1,13 +1,25 @@
 body{
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: Libre Franklin;
     margin: auto;
-    text-align:center;
 }
 
 h1{
-    font-size: 80px;    
+    font-size: 100px;    
+}
+
+h2{
+    font-size:70px;
+}
+
+h3{
+    font-size:40px;
+}
+
+p, label, input{
+    color: #6D6D6D;
 }
 
 a{
+    font-size:20px;
     text-decoration:none;
 }

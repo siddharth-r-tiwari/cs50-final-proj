@@ -1,6 +1,6 @@
 import urllib
 import requests
-import datetime
+from datetime import datetime, date, timedelta
 from bs4 import BeautifulSoup
 import numpy
 import nltk
@@ -13,7 +13,7 @@ def get_dtWBM(dt):
 
 def get_dtSTEP(response):
     """convert date to steppable format"""
-    return datetime.datetime.strptime(response, "%Y-%m-%d")
+    return datetime.strptime(response, "%Y-%m-%d")
 
 def call_api(url, timestamp):
     parameters = {
@@ -58,7 +58,7 @@ def get_text(html):
     page = BeautifulSoup(html, 'html.parser')
     for tag in tags:
         for item in page.find_all(tag):
-            if len(item.get_text()) > 10 and (not("The Archive Team" in item.get_text()) or not ("Wayback Machine" in item.get_text()) or not ("Panic Downloads" in item.get_text())):
+            if (len(item.get_text()) <= 200 and len(item.get_text()) > 10) and (not("The Archive Team" in item.get_text()) or not ("Wayback Machine" in item.get_text()) or not ("Panic Downloads" in item.get_text())):
                 text.append(item.get_text())
     text.sort(key=len, reverse=True)
     return text
@@ -74,7 +74,27 @@ def get_sentiments(text):
 
     return sentiments
 
-def get_topics(text):
+def format_data(len_text, sentiments):
+    data = {'len_text':[], 'sentiments':[]}
+    sentiments_unavg = {}
+    for i in range(0, len(len_text)):
+        l1 = len_text[i]
+        for l2 in data['len_text']:
+            if abs(l1 - l2) <= 5:
+                sentiments_unavg[str(l2)].append(sentiments[i]) 
+                break
+        else:
+            data['len_text'].append(l1)
+            sentiments_unavg[str(l1)] = [sentiments[i]]
+            
+    for key in sentiments_unavg:
+        data['sentiments'].append(sum(sentiments_unavg[key])/len(sentiments_unavg[key]))
+    
+    return data
 
-    return topics
+def get_start_date():
+    return get_dtSTEP(str(date.today() + timedelta(weeks=-52)))
+
+def get_end_date():
+    return get_dtSTEP(str(date.today()))
 

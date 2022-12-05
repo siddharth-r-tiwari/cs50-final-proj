@@ -1,6 +1,6 @@
 //level 1 functions
 async function animation(queries){
-    for(let i = 1; i <= 4; i++)
+    for(let i = 1; i <= Object.keys(queries).length; i++)
     {
         document.getElementById("step").innerHTML = i;
         document.getElementById("newssite").innerHTML = queries[i.toString()].newssite;
@@ -13,20 +13,20 @@ async function animation(queries){
 }
 
 async function step(queries){
-    step = parseInt(document.getElementById("step_num").value);
-    if (step == 0 || step == 4){
+    var step = parseInt(document.getElementById("step_num").value);
+    var next = 0;
+    if (step == 0 || step == Object.keys(queries).length){
         next = 1;
     } else {
         next = step + 1;
     }
     document.getElementById("step_num").value = next.toString();
-    document.getElementById("step").innerHTML = next;
+    document.getElementById("step").innerHTML = next.toString();
     document.getElementById("newssite").innerHTML = queries[next.toString()].newssite;
     document.getElementById("date_queried").innerHTML = queries[next.toString()].date_queried;
     document.getElementById("date_returned").innerHTML = queries[next.toString()].date_returned;
     bullseye(queries[next.toString()].len_text_formatted, queries[next.toString()].sentiments_formatted);
     phrases(queries[next.toString()].phrases);
-
 }
 
 //level 2 functions

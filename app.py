@@ -26,50 +26,56 @@ def about():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    query = {}
+    #queries = {'0': [url, date_queried, phrases, len_text_formatted, sentiments_formatted]}
+    queries = {}
+
 
     if request.method == "POST":
-        query['date_start'] = get_dtSTEP(request.form.get("date_start"))
-        query['date_end'] = get_dtSTEP(request.form.get("date_end"))
-        query['n'] = request.form.get("n")
-        query['url']  = request.form.get("url")
+        date_start = get_dtSTEP(request.form.get("date_start"))
+        date_end = get_dtSTEP(request.form.get("date_end"))
+        n = int(request.form.get("n"))
+        url  = request.form.get("url")
     
     else:
-        query['date_start'] = get_start_date()
-        query['date_end'] = get_end_date()
-        query['n'] = 2
-        query['url'] = 'https://www.npr.org/'
+        date_start = get_date_start()
+        date_end = get_date_end()
+        n = 4
+        url = 'https://www.foxnews.com/'
 
-    #dates = get_dates(query['date_start'], query['date_end'], query['n'])
-    rq = call_api(query['url'], query['date_start'])
-    #for date in dates:
-        
-    if rq == {}:
-        flash("No API Response")
-        query['response'] = "No API Response"
-    else:
-        query['request'] = rq
-        snapshotUrl = get_snapshoturl(rq)
+    dates = get_dates(date_start, date_end, n)
+    parameters = [n, url, dates]
 
-        if not snapshotUrl:
-            flash("No Snapshot URL returned")
-            query['response'] = "No Snapshot URL returned"
+    for i in range(1, n+1):
+        queries[str(i)] = {}
+        queries[str(i)]['newssite'] = url
+        queries[str(i)]['date_queried'] = dates[i - 1]
+
+        rq = call_api(url, dates[i - 1])
             
+        if rq == {}:
+            flash("No API Response")
+            queries[str(i)]['response'] = "No API Response"
         else:
-            query['date_accuracy'] = get_snapshotdate(rq)
-            html = get_HTML(snapshotUrl)
-            text = get_text(html)
-            len_text = [len(phrase) for phrase in text]
-            sentiments = get_sentiments(text)
-            data = format_data(len_text, sentiments)
+            snapshotUrl = get_snapshoturl(rq)
 
-            phrases = {'text': text, 'sentiments': sentiments}
-            query['phrases'] = phrases
-            query['len_text_formatted'] = data['len_text']
-            query['sentiments_formatted'] = data['sentiments']
-          
-            #https://stackoverflow.com/questions/72076666/create-a-dictionary-from-multiple-lists-one-list-as-key-other-as-value
-       
+            if not snapshotUrl:
+                flash("No Snapshot URL returned")
+                queries[str(i)]['response'] = "No Snapshot URL returned"
+                
+            else:
+                queries[str(i)]['date_returned'] = get_snapshotdate(rq)
+                html = get_HTML(snapshotUrl)
+                text = get_text(html)
+                len_text = [len(phrase) for phrase in text]
+                sentiments = get_sentiments(text)
+                data = format_data(len_text, sentiments)
 
-    return render_template("index.html", query=query)
+                phrases = {'text': text, 'sentiments': sentiments}
+                queries[str(i)]['phrases'] = phrases
+                queries[str(i)]['len_text_formatted'] = data['len_text']
+                queries[str(i)]['sentiments_formatted'] = data['sentiments']
+            
+                #https://stackoverflow.com/questions/72076666/create-a-dictionary-from-multiple-lists-one-list-as-key-other-as-value
+
+    return render_template("index.html", queries=queries)
 

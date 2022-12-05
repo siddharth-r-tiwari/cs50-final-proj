@@ -7,13 +7,20 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 nltk.download('vader_lexicon')
 
-def get_dtWBM(dt):
-    """"""
-    return str(dt.year) + str(dt.month) + str(dt.day)
+#level 1 functions
+def get_date_start():
+    return get_dtSTEP(str(date.today() + timedelta(weeks=-52)))
 
-def get_dtSTEP(response):
-    """convert date to steppable format"""
-    return datetime.strptime(response, "%Y-%m-%d")
+def get_date_end():
+    return get_dtSTEP(str(date.today()))
+
+def get_dates(date_start, date_end, n):
+    dates = []
+    span = date_end - date_start
+    delta = span/(n-1)
+    for i in range(n):
+        dates.append(date_start + delta*i)
+    return dates
 
 def call_api(url, timestamp):
     parameters = {
@@ -92,9 +99,12 @@ def format_data(len_text, sentiments):
     
     return data
 
-def get_start_date():
-    return get_dtSTEP(str(date.today() + timedelta(weeks=-52)))
+#level 2 functions
+def get_dtWBM(dt):
+    """"""
+    return str(dt.year) + str(dt.month) + str(dt.day)
 
-def get_end_date():
-    return get_dtSTEP(str(date.today()))
+def get_dtSTEP(response):
+    """convert date to steppable format"""
+    return datetime.strptime(response, "%Y-%m-%d")
 

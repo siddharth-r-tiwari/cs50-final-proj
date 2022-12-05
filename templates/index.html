@@ -16,15 +16,12 @@
 
     <body>
         <script>
-            
-            phrases = {{ query.phrases|tojson }}
-            len_text_formatted = {{ query.len_text_formatted|tojson }};
-            sentiments_formatted = {{ query.sentiments_formatted|tojson }};
+            queries = {{ queries|tojson }};
             window.onload=function(){
-                SAEyeAnimation(len_text_formatted, sentiments_formatted);
-                longest_phrases(phrases);
+                animation(queries);
             }
         </script>
+
         <div class="col-lg-4 position-fixed one text-right p-5">
             <h1>Essence</h1>
             <nav>
@@ -42,7 +39,16 @@
                 <label for="n">Steps:</label>
                 <input type="number" id="n" name="n" required autocomplete="off"><br><br>
                 <label for="url">News-site: </label>
-                <input type="url" id="url" name="url" required autocomplete="off"><br><br>
+                <select name="url" id="url" required>
+                    <option value="https://www.cnn.com/">CNN</option>
+                    <option value="https://www.nbcnews.com/">NBC</option>
+                    <option value="https://www.npr.org/">NPR</option>
+                    <option value="https://www.wsj.com/">Wall Street Journal</option>
+                    <option value="https://www.foxnews.com/">Fox</option>
+                    <option value="https://www.bbc.com/">BBC</option>
+                    <option value="https://www.reuters.com/">Reuters</option>
+                </select><br><br>
+                <input type="hidden" name="step_num" id="step_num" value="4">
                 <input type="submit">
             </form><br>
             <h6>Copyright &#169; 2022, Siddharth Tiwari</h6>
@@ -51,33 +57,34 @@
 
             <h2>Results: </h2>
             <div class="container p-2">
-                <button onclick="SAEyeAnimation(len_text_formatted, sentiments_formatted);"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M16 37.85v-28l22 14Zm3-14Zm0 8.55 13.45-8.55L19 15.3Z"/></svg></button>
-                <button><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M6 38v-8.7q0-3.95 2.8-6.725 2.8-2.775 6.7-2.775h20.8l-7.7-7.7 2.1-2.1L42 21.3 30.7 32.6l-2.1-2.1 7.7-7.7H15.5q-2.7 0-4.6 1.9Q9 26.6 9 29.3V38Z"/></svg></button>
+                <span style="font-size:20px">Query details:</span>
+                Step: <span id="step"></span>
+                URL: <span id="newssite"></span>
+                Date queried:<span id="date_queried"></span>
+                Date returned:<span id="date_returned"></span>
             </div>
             <canvas id="visualizations" width="500" height="500"></canvas>
-            <h5>Legend:</h5>
+            <div class="container p-2">
+                <!--Legend: <img src="{{url_for('static', filename='legend.png')}}" />-->
+                <button onclick="animation(queries);"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M16 37.85v-28l22 14Zm3-14Zm0 8.55 13.45-8.55L19 15.3Z"/></svg></button>
+                <button onclick="step(queries)"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M6 38v-8.7q0-3.95 2.8-6.725 2.8-2.775 6.7-2.775h20.8l-7.7-7.7 2.1-2.1L42 21.3 30.7 32.6l-2.1-2.1 7.7-7.7H15.5q-2.7 0-4.6 1.9Q9 26.6 9 29.3V38Z"/></svg></button><br>
+                Average phrase length:<p id="avg_len"></p>
+                Average sentiment:<p id="avg_sentiment"></p>
+            </div>
+            <h4>Longest Phrases</h4>
+            <!--<button onclick="longest_phrases(query);">Longest</button>
+            <button onclick="most_positive_phrases(query);">Most Positive</button>
+            <button onclick="most_negative_phrases(query);">Most Negative</button>-->
+            <p id="p1"></p>
+            <p id="p2"></p>
+            <p id="p3"></p>
+            <p id="p4"></p>
+            <p id="p5"></p><br>
+ 
+            <!--<canvas id="legend" width="300" height="75"></canvas>-->
+ 
 
-            <h4>Phrases</h4>
-            <button onclick="longest_phrases(phrases);">Longest</button>
-            <button onclick="most_positive_phrases(phrases);">Most Positive</button>
-            <button onclick="most_negative_phrases(phrases);">Most Negative</button>
-            <p id="t1"></p>
-            <p id="t2"></p>
-            <p id="t3"></p>
-            <p id="t4"></p>
-            <p id="t5"></p>
-
-            <h4>Query Details</h4>
-            <p>Date Range: {{query.date_start}}-{{query.date_end}}</p>
-            <p>Steps: {{query.n}}</p>
-            <p>URL: {{query.url}}</p>
-            <p>Request: {{query.request}}</p>
-            <p>API Returned Dates: {{query.date_accuracy}}</p>
-            <p>Response: {{query.response}}</p>
-            <p>Length of Scrapes: {{query.len_text_formatted}}</p>
-            <p>Response: {{query.sentiments_formatted}}</p>
-
-            <h3>Interpreting Results:</h3>
+            <p>Queries: {{queries}}</p>
 
         </div>
 

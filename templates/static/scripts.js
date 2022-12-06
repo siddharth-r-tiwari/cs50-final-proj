@@ -7,25 +7,27 @@ async function animation(queries){
     document.getElementById("pb3").hidden = true;
     document.getElementById("step_num").value = "0";
     document.getElementById("query_details").hidden = false;
-    document.getElementById("visualizations").hidden = false;
+    document.getElementById("canvas").hidden = false;
+    document.getElementById("phrases").hidden = false;
 
     if(Object.keys(queries).includes('Error')){
         error(queries['Error']); 
+        document.getElementById("query_details").hidden = true;
     }
     else{
         for(let i = 1; i <= Object.keys(queries).length; i++)
         {
             document.getElementById("step").innerHTML = i;
             document.getElementById("newssite").innerHTML = queries[i.toString()].newssite;
+            document.getElementById("date_queried").innerHTML = queries[i.toString()].date_queried;
+            document.getElementById("date_returned").innerHTML = queries[i.toString()].date_returned;
             if (Object.keys(queries[i.toString()]).includes('Error')){
-                error(queries[i.toString()]['Error']); 
+                error(queries[i.toString()]['Error']);
                 await sleep(4000);
-                document.getElementById("query_details").hidden = false;
-                document.getElementById("visualizations").hidden = false;
             }
             else{
-                document.getElementById("date_queried").innerHTML = queries[i.toString()].date_queried;
-                document.getElementById("date_returned").innerHTML = queries[i.toString()].date_returned;
+                document.getElementById("phrases").hidden = false;
+                document.getElementById("canvas").hidden = false;
                 bullseye(queries[i.toString()].len_text_formatted, queries[i.toString()].sentiments_formatted);
                 longest_phrases(queries, i.toString());
                 await sleep(4000);
@@ -46,19 +48,21 @@ async function step(queries){
         next = step + 1;
     }
 
+
     document.getElementById("step_num").value = next.toString();
+    document.getElementById("step").innerHTML = next.toString();
+    document.getElementById("newssite").innerHTML = queries[next.toString()].newssite;
+    document.getElementById("date_queried").innerHTML = queries[next.toString()].date_queried;
+    document.getElementById("date_returned").innerHTML = queries[next.toString()].date_returned;
     if (Object.keys(queries[next.toString()]).includes('Error')){
         clearPhrases();
-        error(queries[next.toString()]['Error']); 
+        error(queries[next.toString()]['Error']);
+        document.getElementById("query_details").hidden = false; 
     }
     else{
         document.getElementById("query_details").hidden = false;
-        document.getElementById("visualizations").hidden = false;
-
-        document.getElementById("step").innerHTML = next.toString();
-        document.getElementById("newssite").innerHTML = queries[next.toString()].newssite;
-        document.getElementById("date_queried").innerHTML = queries[next.toString()].date_queried;
-        document.getElementById("date_returned").innerHTML = queries[next.toString()].date_returned;
+        document.getElementById("canvas").hidden = false;
+        document.getElementById("phrases").hidden = false;
 
         bullseye(queries[next.toString()].len_text_formatted, queries[next.toString()].sentiments_formatted);
         longest_phrases(queries, next.toString());
@@ -74,7 +78,7 @@ async function bullseye(len_text, sentiments){
     var c = document.getElementById("visualizations");
     var ctx = c.getContext("2d");
     for(let i = 0; i < sentiments.length; i++){
-        await sleep(100);
+        await sleep(75);
         if (sentiments[i] != 0){
             ctx.beginPath();
             ctx.arc(250, 250, getEyeRad(len_text[i]), 0, 2 * Math.PI);
@@ -99,7 +103,7 @@ async function longest_phrases(queries, step){
     phrase_dict = queries[step].phrases;
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][i-1];
-        await sleep(500); 
+        await sleep(200); 
     }
 }
 
@@ -113,7 +117,7 @@ async function most_positive_phrases(queries, step){
     sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  }).reverse();
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];
-        await sleep(500); 
+        await sleep(200); 
     }
 }
 
@@ -124,14 +128,15 @@ async function most_negative_phrases(queries, step){
     sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  });
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];
-        await sleep(500); 
+        await sleep(200); 
     }
 }
 
 function error(error_message){
     document.getElementById("response").innerHTML = error_message;
-    document.getElementById("query_details").hidden = true;
-    document.getElementById("visualizations").hidden = true;
+    document.getElementById("canvas").hidden = true;
+    document.getElementById("phrases").hidden = true;
+
 }
 
 //level 3 functions

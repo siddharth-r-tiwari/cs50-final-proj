@@ -1,5 +1,12 @@
 //level 1 functions
 async function animation(queries){
+    document.getElementById("play").hidden = true;
+    document.getElementById("next").hidden = true;
+    document.getElementById("pb1").hidden = true;
+    document.getElementById("pb2").hidden = true;
+    document.getElementById("pb3").hidden = true;
+    document.getElementById("step_num").value = "0";
+
     for(let i = 1; i <= Object.keys(queries).length; i++)
     {
         document.getElementById("step").innerHTML = i;
@@ -7,9 +14,12 @@ async function animation(queries){
         document.getElementById("date_queried").innerHTML = queries[i.toString()].date_queried;
         document.getElementById("date_returned").innerHTML = queries[i.toString()].date_returned;
         bullseye(queries[i.toString()].len_text_formatted, queries[i.toString()].sentiments_formatted);
-        phrases(queries[i.toString()].phrases);
+        longest_phrases(queries, i.toString());
         await sleep(5000);
     }
+
+    document.getElementById("play").hidden = false;
+    document.getElementById("next").hidden = false;
 }
 
 async function step(queries){
@@ -26,7 +36,10 @@ async function step(queries){
     document.getElementById("date_queried").innerHTML = queries[next.toString()].date_queried;
     document.getElementById("date_returned").innerHTML = queries[next.toString()].date_returned;
     bullseye(queries[next.toString()].len_text_formatted, queries[next.toString()].sentiments_formatted);
-    phrases(queries[next.toString()].phrases);
+    longest_phrases(queries, next.toString());
+    document.getElementById("pb1").hidden = false;
+    document.getElementById("pb2").hidden = false;
+    document.getElementById("pb3").hidden = false;
 }
 
 //level 2 functions
@@ -53,33 +66,37 @@ async function bullseye(len_text, sentiments){
     ctx.fillText("10", 310, 250);
 }
 
-async function phrases(phrases){
+
+async function longest_phrases(queries, step){
     clearPhrases();
+    phrase_dict = queries[step].phrases;
     for(let i = 1; i <= 5; i++){
-        document.getElementById("p" + i.toString()).innerHTML = phrases['text'][i-1];
+        document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][i-1];
         await sleep(500); 
     }
-    
 }
 
-async function most_positive_phrases(phrases){
+
+async function most_positive_phrases(queries, step){
     clearPhrases();
 
+    phrase_dict = queries[step].phrases;
     //https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly
     //https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/
-    sorted_sentiments = JSON.parse(JSON.stringify(phrases['sentiments'])).sort(function (a, b) {  return a - b;  }).reverse();
+    sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  }).reverse();
     for(let i = 1; i <= 5; i++){
-        document.getElementById("p" + i.toString()).innerHTML = phrases['text'][phrases['sentiments'].indexOf(sorted_sentiments[i-1])];
-        await sleep(100); 
+        document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];
+        await sleep(500); 
     }
 }
 
-async function most_negative_phrases(phrases){
+async function most_negative_phrases(queries, step){
     clearPhrases();
-    sorted_sentiments = JSON.parse(JSON.stringify(phrases['sentiments'])).sort(function (a, b) {  return a - b;  });
+    phrase_dict = queries[step].phrases;
+    sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  });
     for(let i = 1; i <= 5; i++){
-        document.getElementById("p" + i.toString()).innerHTML = phrases['text'][phrases['sentiments'].indexOf(sorted_sentiments[i-1])];
-        await sleep(100); 
+        document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];
+        await sleep(500); 
     }
 }
 

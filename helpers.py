@@ -94,7 +94,7 @@ def get_text(html):
 def capture_redirects(queries):
     errors = []
     for index in queries.keys():
-        if((queries[index]['date_returned'] - queries[index]['date_queried'] > timedelta(weeks=10)) and (queries[index]['date_returned'] - get_date_end() < timedelta(weeks=1))):
+        if(((queries[index]['date_returned'] - queries[index]['date_queried']) > timedelta(weeks=10)) and ((get_date_end() - queries[index]['date_returned']) < timedelta(weeks=1))):
             errors.append(index)
     return errors
 

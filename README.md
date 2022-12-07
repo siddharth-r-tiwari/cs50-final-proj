@@ -2,8 +2,8 @@
 ## The Essence of Digital News Media: A Dynamic, Longitudinal Visualization of Sentiment and Topics
 
 ### Purpose + Inspiration
-<p><span style="color:black; font-size:25px;">Essence</span> was made in response to a widespread belief that the news has become more negative and polarized, over time. While it's easy to agree with those around us, how exactly can we visualize this, in one place? In a way that allows us to experience the shift in tone, over time?</p>
-<p>Drawing inspiration from Harvard's own <a href="http://www.fernandaviegas.com/">Dr. Fernanda Viegas</a> and her data-driven, dynamic, artful visualizations, <span style="color:black; font-size:25px;">Essence</span> scrapes and analyzes the tone of newssites given a historical date range to produce a bulls-eye visualization to produce insightful slices of internet history.</p>
+<p>Essence was made in response to a widespread belief that the news has become more negative and polarized, over time. While it's easy to agree with those around us, how exactly can we visualize this, in one place? In a way that allows us to experience the shift in tone, over time?</p>
+<p>Drawing inspiration from Harvard's own <a href="http://www.fernandaviegas.com/">Dr. Fernanda Viegas</a> and her data-driven, dynamic, artful visualizations, Essence scrapes and analyzes the tone of newssites given a historical date range to produce a bulls-eye visualization to produce insightful slices of internet history.</p>
             
 ### Using Essence
 <p>First, select from a set of 10 news-sites and input a past date range (start date and end date) and number of steps. Then an animation presenting both the bulls-eye animation and longest phrases will play.</p> 
@@ -14,7 +14,14 @@
 
 ### Video
 
-### Program Files
+
+### Files
+*`cs50-final-proj/`
+    *`README.md`:
+    *`DESIGN.md`:
+    *`requirements.txt`:
+    *`app.py`:
+    *`helpers.py`:
 
 
 ### Languages, Packages, APIs

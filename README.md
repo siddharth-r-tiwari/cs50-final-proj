@@ -13,8 +13,7 @@
 <p>Given that this program uses open-source data from historically-formatted newssites (often with paywalls, as well), certain queries may, well, fail due to a lack of proper data. In this case, change the query date or/and the newssite in order to produce a new query.</p>
 
 ## Video
-[See Essence here.](https://youtu.be/wqPBtTq072M)
-
+[See Essence here.](https://youtu.be/6bG_HevbvtM)
 
 ## Files
 * `cs50-final-proj/`

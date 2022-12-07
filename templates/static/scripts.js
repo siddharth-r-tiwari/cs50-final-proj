@@ -1,5 +1,5 @@
 async function animation(queries){
-    //hide and
+    //hide all buttons and only display canvas and query details for user interaction
     document.getElementById("play").hidden = true;
     document.getElementById("next").hidden = true;
     document.getElementById("pb1").hidden = true;
@@ -10,6 +10,7 @@ async function animation(queries){
     document.getElementById("canvas").hidden = false;
     document.getElementById("phrases").hidden = false;
 
+    //do not display any animation if there is an error with user input
     if(Object.keys(queries).includes('Error')){
         error(queries['Error']); 
         document.getElementById("query_details").hidden = true;
@@ -17,6 +18,7 @@ async function animation(queries){
     else{
         for(let i = 1; i <= Object.keys(queries).length; i++)
         {
+            //display query details
             document.getElementById("step").innerHTML = i;
             document.getElementById("newssite").innerHTML = queries[i.toString()].newssite;
             document.getElementById("date_queried").innerHTML = queries[i.toString()].date_queried;
@@ -114,6 +116,8 @@ async function most_positive_phrases(queries, step){
     phrase_dict = queries[step].phrases;
     //https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly
     //https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/
+
+    //as sentiments
     sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  }).reverse();
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];

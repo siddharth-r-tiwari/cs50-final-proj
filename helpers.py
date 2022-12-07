@@ -52,20 +52,17 @@ def call_api(url, timestamp):
         return request
 
 def get_snapshoturl(request):
+    """get url for extracting HTML from request JSON"""
     if "closest" in request.json()["archived_snapshots"]:
         return request.json()["archived_snapshots"]["closest"]["url"]
     return False
 
 def get_snapshotdate(request):
+    """get queried date from reqeuest JSON"""
     return request.json()["archived_snapshots"]["closest"]["timestamp"]
 
-#def validate_queries(queries):
-#    valid_queries = []
-#    for query in queries:
-#        if query['date_queried'] - query['date_returned'] > 
-#    return valid_queries
-
 def get_HTML(url):
+    """get HTML from snapshot url"""
     if not url:
         return False
 
@@ -74,25 +71,36 @@ def get_HTML(url):
 
     #https://stackoverflow.com/questions/46000191/utf-8-codec-cant-decode-byte-0x92-in-position-18-invalid-start-byte
     #https://stackoverflow.com/questions/30598350/unicodedecodeerror-charmap-codec-cant-decode-byte-0x8d-in-position-7240-cha
+    #As the websites may use characters that are unrecognizable, the encoder uses a try-except loop to catch errors within the obtained snapshot data
     try:
         html= inbytes.decode("utf-8")
     except UnicodeDecodeError:
+        #sends error message if there is error
         html = "ParsingError"
     fp.close()
     return html
 
 def get_text(html):
+    """obtain text from HTML file"""
     if not html:
         return False
+
+    #After experimenting with BeautifulSoup and obtained files, the following tags were most likely to contain text within historical webpages
     tags = ['h1','h2','h3','h4', 'h5', 'h6','p', 'strong', 'span']
     text = []
 
+    #iterate through the tags to obtain the text corresponding to each
     page = BeautifulSoup(html, 'html.parser')
     for tag in tags:
         for item in page.find_all(tag):
+            #if the text is too short or was previously scraped or results from the WayBack scraper is not added to the data sent to app.py
             if (len(item.get_text().strip()) <= 200 and len(item.get_text().strip()) > 10) and (not("The Archive Team" in item.get_text().strip()) and not ("Wayback Machine" in item.get_text().strip()) and not ("Panic Downloads" in item.get_text().strip()) and not ("archivebot process" in item.get_text().strip())) and not (item.get_text().strip() in text):
                 text.append(item.get_text().strip())
+    
+    #text is sorted from longest to shortest so that the outermost rings are visualized first
     text.sort(key=len, reverse=True)
+
+    #if there is less than 5 scraped phrases from a page, an error is sent to the app.py file
     if(len(text) < 5):
         return "ScrapingError"
     else:
@@ -106,9 +114,15 @@ def capture_redirects(queries):
     return errors
 
 def get_sentiments(text):
+    """Analyze sentiments using NLTK VADER model"""
+
+    #https://realpython.com/python-nltk-sentiment-analysis/
+
+    #create model
     sia = SentimentIntensityAnalyzer()
     sentiments = []
 
+    #obtain compound sentiment score from model
     for phrase in text:
         sentiments.append(sia.polarity_scores(phrase)['compound'])
 

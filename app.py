@@ -25,9 +25,7 @@ def about():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    #queries = {'0': [url, date_queried, phrases, len_text_formatted, sentiments_formatted]}
     queries = {}
-
 
     if request.method == "POST":
         date_start = get_dtSTEP(request.form.get("date_start") + " 00:00:00")

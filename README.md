@@ -69,4 +69,6 @@ python3 -m flask run
 ```
 
 ## Screenshots
+Sample views of the application:
 ![Homepage](screenshots/program.png)
+![HomepageTwo](screenshots/program2.png)

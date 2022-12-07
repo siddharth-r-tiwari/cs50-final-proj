@@ -63,6 +63,7 @@ def index():
             queries[str(i)] = {}
             queries[str(i)]['newssite'] = url
             queries[str(i)]['date_queried'] = dates[i - 1]
+            queries[str(i)]['date_returned'] = ""
 
             #call api using url and the date within the dates array
             rq = call_api(url, dates[i - 1])

@@ -112,8 +112,9 @@ def capture_redirects(queries):
     #iterate through queries
     for index in queries.keys():
         #if there is more than 10 weeks between the returned query and requested query and there is less than 1 between the returned query and the currrent date, a redirect is assumed and an error is created
-        if(((queries[index]['date_returned'] - queries[index]['date_queried']) > timedelta(weeks=10)) and ((get_date_end() - queries[index]['date_returned']) < timedelta(weeks=1))):
-            errors.append(index)
+        if(not queries[index]['date_returned'] == ""):
+            if(((queries[index]['date_returned'] - queries[index]['date_queried']) > timedelta(weeks=10)) and ((get_date_end() - queries[index]['date_returned']) < timedelta(weeks=1))):
+                errors.append(index)
     return errors
 
 def get_sentiments(text):

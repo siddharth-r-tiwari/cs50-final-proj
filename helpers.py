@@ -91,6 +91,12 @@ def get_text(html):
     else:
         return text
 
+def capture_redirects(queries):
+    errors = []
+    for index in queries.keys():
+        if((queries[index]['date_returned'] - queries[index]['date_queried'] > timedelta(weeks=10)) and (queries[index]['date_returned'] - get_date_end() < timedelta(weeks=1))):
+            errors.append(index)
+    return errors
 
 def get_sentiments(text):
     sia = SentimentIntensityAnalyzer()

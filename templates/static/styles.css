@@ -3,6 +3,22 @@ body{
     margin: auto;
 }
 
+#left{
+    position:fixed;
+}
+
+@media screen and (max-width: 982px) {
+    #left {
+        width: 100%;
+        position: static;
+    }
+
+    #right{
+        width: 100%;
+        position: static;
+    }
+  }
+
 h1{
     font-size: 100px;    
 }

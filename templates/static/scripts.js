@@ -83,7 +83,7 @@ async function bullseye(len_text, sentiments){
             ctx.beginPath();
             ctx.arc(250, 250, getEyeRad(len_text[i]), 0, 2 * Math.PI);
             ctx.closePath();
-            ctx.fillStyle = getSAEyeHex(sentiments[i]);
+            ctx.fillStyle = getEyeHex(sentiments[i]);
             ctx.lineWidth = 0;
             ctx.fill();
         }
@@ -164,40 +164,10 @@ function getEyeRad(length){
     return radius;
 }
 
-function getSAEyeHex(num){
+function getEyeHex(num){
     if (num <= 0){
         return '#FF' + Math.round(256 + num*256).toString(16) + Math.round(256 + num*256).toString(16);
     } else{
         return "#" + Math.round(256 - num*256).toString(16) + 'FF' +  Math.round(256 - num*256).toString(16);
     }
 }
-
-
-function getSAPhraseHex(num){
-    if (num <= 0){
-        return '#C8' + Math.round(256 + num*256).toString(16) + Math.round(256 + num*256).toString(16);
-    } else{
-        return "#" + Math.round(256 - num*256).toString(16) + 'C8' +  Math.round(256 - num*256).toString(16);
-    }
-}
-
-/*function create_legend(){
-    var c = document.getElementById("legend");
-    var ctx = c.getContext("2d");
-
-    var grd = ctx.createLinearGradient(0, 0, 300, 0);
-    grd.addColorStop(1, "#FF0000");
-    grd.addColorStop(0.5 ,"#FFFFFF");
-    grd.addColorStop(0, "#00FF00");
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, 300, 75);
-
-    ctx.font = "12px Libre Franklin";
-    ctx.fillStyle = "black";
-    ctx.textAlign = "center";
-    ctx.fillText("-1", 10, 37); 
-    ctx.fillText("-0.5", 80, 37); 
-    ctx.fillText("0", 150, 37);
-    ctx.fillText("+0.5", 220, 37);
-    ctx.fillText("+1", 290, 37);
-}*/

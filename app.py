@@ -83,7 +83,11 @@ def index():
                             queries[str(i)]['len_text_formatted'] = data['len_text']
                             queries[str(i)]['sentiments_formatted'] = data['sentiments']
 
-                            #validate_queries(queries)
+                            if(len(data['sentiments']) < 4):
+                                queries[str(i)]['Error'] = "Limited scraped data; try a new date range :["
+
+                    for index in capture_redirects(queries):
+                        queries[index]['Error'] = "Oh no, API Response was redirected :<"
                         
                             #https://stackoverflow.com/questions/72076666/create-a-dictionary-from-multiple-lists-one-list-as-key-other-as-value
 

@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask, flash, redirect, render_template, request
-import pandas as pd
 
 from helpers import *
 

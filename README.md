@@ -17,11 +17,51 @@
 
 ### Files
 *`cs50-final-proj/`
-    *`README.md`:
-    *`DESIGN.md`:
-    *`requirements.txt`:
-    *`app.py`:
-    *`helpers.py`:
+    *`README.md`: Readme doc
+    *`DESIGN.md`: Design doc
+    *`requirements.txt`: Requirements/dependencies for running Essence
+    *`app.py`: Application routes, which contain user input processing and the corresponding response
+    *`helpers.py`: Helper functions used for interacting with APIs, performing text processing and sentiment analysis, and error handling
+    *`templates/`
+        *`index.html`: The Program
+        *`about.html`: About Page
+        *`static/`
+            *`scripts.js`: Dynamic front-end functionality (code for the visualization, user-application interactions)
+            *`styles.css`: CSS Styling
+            *`favicon.png`, `legend.png`, `emotionalismblog.png`: Images used in various parts of the application
 
 
 ### Languages, Packages, APIs
+
+## Getting started
+1. Clone this repository (or download zip file)
+```
+git clone https://github.com/siddharth-r-tiwari/cs50-final-proj.git
+```
+2. Go to the app directory
+```
+cd path/to/cs50-final-proj
+```
+3. Create and activate your virtual environment (optional but recommended!)
+    * macOS/Linux: 
+    ```
+    python3 -m venv venv
+    . venv/bin/activate
+    ```
+    * Windows:
+    ```
+    py -3 -m venv venv
+    venv\Scripts\activate
+    ```
+
+If this works, your command line should now have `(venv)` in front of each line.
+
+4. Install the app requirements
+```
+pip install -r requirements.txt
+```
+5. Run the app!
+```
+export FLASK_APP=app
+python3 -m flask run
+```

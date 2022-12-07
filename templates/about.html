@@ -16,16 +16,34 @@
         <div class="col-lg-3 position-fixed one text-right p-5">
             <h1>About</h1>
             <nav>
-                <a href="/">The Program</a> |
-                <a href="/about.html">About</a>
+                <a href="/" class="navlink">The Program</a> |
+                <a href="/about.html" class="navlink">About</a>
             </nav>
             <h6>Copyright &#169; 2022, Siddharth Tiwari</h6>
+            <img src="{{url_for('static', filename='favicon.png')}}" width="300px"/>
         </div>
         <div class="col-lg-auto offset-lg-4 two p-5 text-center">
             <h2>Purpose + Inspiration</h2>
-            <p>Text</p>
-            <h2>Contact + More</h2>
-            <p>Text</p>
+            <p><span style="color:black; font-size:25px;">Essence</span> was made in response to a widespread belief that the news has become more negative and polarized, over time. While it's easy to agree with those around us, how exactly can we visualize this, in one place? In a way that allows us to experience the shift in tone, over time?</p>
+            <div style="width:50%; margin:auto;">
+                <img src="{{url_for('static', filename='emotionalismblog.jpg')}}" width="500px" style="margin:auto"/>
+                <p><i>They found that there was an increase in negativity in headlines since the year 2000, and a decrease in emotionally neutral headlines. - <a href="https://www.allsides.com/blog/research-shows-news-headlines-have-gotten-more-negative#:~:text=They%20found%20that%20there%20was,according%20to%20the%20AI%20estimation.">Research Shows News Headlines Have Gotten More Negative, AllSides Media</a></i></p>
+            </div>
+            <p>Drawing inspiration from Harvard's own <a href="http://www.fernandaviegas.com/">Dr. Fernanda Viegas</a> and her data-driven, dynamic, artful visualizations, <span style="color:black; font-size:25px;">Essence</span> scrapes and analyzes the tone of newssites given a historical date range to produce a bulls-eye visualization to produce insightful slices of internet history.</p>
+            
+            <h2>Using Essence</h2>
+            <p>First, select from a set of 10 news-sites and input a past date range (start date and end date) and number of steps. Then an animation presenting both the bulls-eye animation and longest phrases will play.</p> 
+            <h5>The bulls-eye animation (pictured on the left panel), depicts two variables: the tone and length of a phrase; the radius of a ring within bulls-eye corresponds to the length of the phrase and the color of the ring reflects the positivity and negativity of the phrase.</h5> 
+            <p>To make the data simultaneously quantifiable and immersive, markers for 10, 100, and 200 characters are depicted on the bullseye visualization. Underneath the visualization is a legend (below) relating the colors to their corresponding positivity and negativities (+1, green is 'most positive'; 0, white, is neutral; -1, red is 'least positive').</p>
+            <img src="{{url_for('static', filename='legend.png')}}" width="300" height="30"/>
+            <p><i>Legend</i></p>
+            <p>After the animation ends, you have the option to replay the animation by pressing the 'play' button or 'stepping' through the different animations, one at a time. While stepping through the animation, in order to relate the visualization to actual scraped text from the website, the user can see the five longest phrases from a given scrape, five most positive phrases, and five most negative phrases.</p>
+            <p>Given that this program uses open-source data from historically-formatted newssites (often with paywalls, as well), certain queries may, well, fail due to a lack of proper data. In this case, change the query date or/and the newssite in order to produce a new query.</p>
+
+            <h2>Contact + Credits</h2>
+            <p>Created for Harvard CS50 Fall '22, Final Project.</p>
+            <p>Thank you to <a href="https://archive.org/web/">https://archive.org/web/</a> for their commitment to open data and the history of the internet.</p>
+            <p>View more projects at: <a href="https://github.com/siddharth-r-tiwari">https://github.com/siddharth-r-tiwari</a></p>
         </div>
 
     </body>

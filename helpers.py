@@ -107,8 +107,11 @@ def get_text(html):
         return text
 
 def capture_redirects(queries):
+    """Capture redirects and create corresponding errors"""
     errors = []
+    #iterate through queries
     for index in queries.keys():
+        #if there is more than 10 weeks between the returned query and requested query and there is less than 1 between the returned query and the currrent date, a redirect is assumed and an error is created
         if(((queries[index]['date_returned'] - queries[index]['date_queried']) > timedelta(weeks=10)) and ((get_date_end() - queries[index]['date_returned']) < timedelta(weeks=1))):
             errors.append(index)
     return errors
@@ -129,11 +132,13 @@ def get_sentiments(text):
     return sentiments
 
 def format_data(len_text, sentiments):
+    """Format data for easy visualization"""
     data = {'len_text':[], 'sentiments':[]}
     sentiments_unavg = {}
     for i in range(0, len(len_text)):
         l1 = len_text[i]
         for l2 in data['len_text']:
+            #condense visualizations with less than a 5 characters difference
             if abs(l1 - l2) <= 5:
                 sentiments_unavg[str(l2)].append(sentiments[i]) 
                 break
@@ -146,9 +151,8 @@ def format_data(len_text, sentiments):
     
     return data
 
-#level 2 functions
+#date formatting functions
 def get_dtWBM(dt):
-    """"""
     return str(dt.year) + str(dt.month) + str(dt.day)
 
 def get_dtSTEP(dt):

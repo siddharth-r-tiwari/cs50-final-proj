@@ -1,5 +1,6 @@
+//NOTE: functions are made asynchronous for sleeping functionality (function below)
 async function animation(queries){
-    //hide all buttons and only display canvas and query details for user interaction
+    //hide all buttons and only display canvas and query details for user interaction; this hidden attribute controls the UI experience for the user
     document.getElementById("play").hidden = true;
     document.getElementById("next").hidden = true;
     document.getElementById("pb1").hidden = true;
@@ -23,6 +24,7 @@ async function animation(queries){
             document.getElementById("newssite").innerHTML = queries[i.toString()].newssite;
             document.getElementById("date_queried").innerHTML = queries[i.toString()].date_queried;
             document.getElementById("date_returned").innerHTML = queries[i.toString()].date_returned;
+            //if an error for a specific query exists, it is displayed within the specific step
             if (Object.keys(queries[i.toString()]).includes('Error')){
                 error(queries[i.toString()]['Error']);
                 await sleep(4000);
@@ -41,6 +43,7 @@ async function animation(queries){
 
 }
 
+//stepping function for the 
 async function step(queries){
     var step = parseInt(document.getElementById("step_num").value);
     var next = 0;
@@ -74,11 +77,13 @@ async function step(queries){
     }
 }
 
-//level 2 functions
+//function to create bullseye
 async function bullseye(len_text, sentiments){
     clearCanvas();
     var c = document.getElementById("visualizations");
     var ctx = c.getContext("2d");
+
+    //iterate through formatted data
     for(let i = 0; i < sentiments.length; i++){
         await sleep(75);
         if (sentiments[i] != 0){
@@ -90,6 +95,8 @@ async function bullseye(len_text, sentiments){
             ctx.fill();
         }
     }
+
+    //10, 100, 200 markers
     ctx.font = "12px Libre Franklin";
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
@@ -117,7 +124,7 @@ async function most_positive_phrases(queries, step){
     //https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly
     //https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/
 
-    //as sentiments
+    //as objects behave as pointers in javascript, I stringified and reparsed the objects so that they could be copied and sorted for the purposes of displaying the most positive and negative phrases
     sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  }).reverse();
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];
@@ -129,6 +136,7 @@ async function most_negative_phrases(queries, step){
     clearPhrases();
     document.getElementById("response").innerHTML = "Most Negative Phrases:";
     phrase_dict = queries[step].phrases;
+    //as objects behave as pointers in javascript, I stringified and reparsed the objects so that they could be copied and sorted for the purposes of displaying the most positive and negative phrases
     sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  });
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][phrase_dict['sentiments'].indexOf(sorted_sentiments[i-1])];
@@ -136,6 +144,7 @@ async function most_negative_phrases(queries, step){
     }
 }
 
+//generate error messages
 function error(error_message){
     document.getElementById("response").innerHTML = error_message;
     document.getElementById("canvas").hidden = true;
@@ -143,7 +152,8 @@ function error(error_message){
 
 }
 
-//level 3 functions
+//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+//created sleep function to make visualizations more dynamic
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
  }

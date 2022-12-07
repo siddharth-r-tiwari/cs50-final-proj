@@ -58,7 +58,6 @@ def index():
                 snapshotUrl = get_snapshoturl(rq)
 
                 if not snapshotUrl:
-                    flash("No Snapshot URL returned")
                     queries[str(i)]['Error'] = "Oh no, Error in API Response :<"
                     
                 else:

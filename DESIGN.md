@@ -45,3 +45,13 @@ The code for the specific functions within the retrieval, processing, and analys
 The HTML Canvas attribute was used dynamically through JavaScript for the creation of the visualizations in Essence. Through the aid of parametrized and asynchronous functions, the user can repeatedly use different variations of these functions to view the visualization and associated phrases in different manners. The data from the previous steps was formatted so that numeric values and phrases were easily iterated and displayed; errors were also documented in a manner that allowed for easy displaying.
 
 ### Error Handling
+As the pipeline to retrieve and produce usable data contained several steps, here is a list of possible errors that were handled:
+* User Inputs:
+    * Incorrect Date Range
+    * Incorrect Step Size
+    * Incorrect URLs: The first thought was to expand usage to all websites, but was restricted to 10 URLs for relevancy, reliability, and availability
+* API response and data:
+    * No API Response/No URL given for HTML extraction
+    * Error with Decoding HTML: Try-Except Block was used in the case of improper decoding
+    * Limited phrases decoded/scraped: Message was given to the user if less than five presentable phrases resulted from the pipeline
+    * Redirects: This was an error specific to the WayBackScraper API; if a website has a paywall or the API malfunctions, the API would return the most recent webpage rather than the webpage closest to the date requested.

@@ -99,7 +99,7 @@ async function bullseye(len_text, sentiments){
 
 async function longest_phrases(queries, step){
     clearPhrases();
-    document.getElementById("response").innerHTML = "Longest Phrases";    
+    document.getElementById("response").innerHTML = "Longest Phrases:";    
     phrase_dict = queries[step].phrases;
     for(let i = 1; i <= 5; i++){
         document.getElementById("p" + i.toString()).innerHTML = phrase_dict['text'][i-1];
@@ -110,7 +110,7 @@ async function longest_phrases(queries, step){
 
 async function most_positive_phrases(queries, step){
     clearPhrases();
-    document.getElementById("response").innerHTML = "Most Positive Phrases";
+    document.getElementById("response").innerHTML = "Most Positive Phrases:";
     phrase_dict = queries[step].phrases;
     //https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly
     //https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/
@@ -123,7 +123,7 @@ async function most_positive_phrases(queries, step){
 
 async function most_negative_phrases(queries, step){
     clearPhrases();
-    document.getElementById("response").innerHTML = "Most Negative Phrases";
+    document.getElementById("response").innerHTML = "Most Negative Phrases:";
     phrase_dict = queries[step].phrases;
     sorted_sentiments = JSON.parse(JSON.stringify(phrase_dict['sentiments'])).sort(function (a, b) {  return a - b;  });
     for(let i = 1; i <= 5; i++){

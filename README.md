@@ -16,19 +16,19 @@
 
 
 ### Files
-*`cs50-final-proj/`
-    *`README.md`: Readme doc
-    *`DESIGN.md`: Design doc
-    *`requirements.txt`: Requirements/dependencies for running Essence
-    *`app.py`: Application routes, which contain user input processing and the corresponding response
-    *`helpers.py`: Helper functions used for interacting with APIs, performing text processing and sentiment analysis, and error handling
-    *`templates/`
-        *`index.html`: The Program
-        *`about.html`: About Page
-        *`static/`
-            *`scripts.js`: Dynamic front-end functionality (code for the visualization, user-application interactions)
-            *`styles.css`: CSS Styling
-            *`favicon.png`, `legend.png`, `emotionalismblog.png`: Images used in various parts of the application
+* `cs50-final-proj/`
+    * `README.md`: Readme doc
+    * `DESIGN.md`: Design doc
+    * `requirements.txt`: Requirements/dependencies for running Essence
+    * `app.py`: Application routes, which contain user input processing and the corresponding response
+    * `helpers.py`: Helper functions used for interacting with APIs, performing text processing and sentiment analysis, and error handling
+    * `templates/`
+        * `index.html`: The Program
+        * `about.html`: About Page
+        * `static/`
+            * `scripts.js`: Dynamic front-end functionality (code for the visualization, user-application interactions)
+            * `styles.css`: CSS Styling
+            * `favicon.png`, `legend.png`, `emotionalismblog.png`: Images used in various parts of the application
 
 
 ### Languages, Packages, APIs

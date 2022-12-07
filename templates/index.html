@@ -16,7 +16,8 @@
 
     <body>
         <script>
-            
+            //Data from back-end is stored in 'queries' variable to use for all user functions on the index page; converted to JSON for subscriptability
+            //Link: https://flask.palletsprojects.com/en/2.2.x/patterns/javascript/
             queries = {{ queries|tojson }};
             window.onload=function(){
                 animation(queries);

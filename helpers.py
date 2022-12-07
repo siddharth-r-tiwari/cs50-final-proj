@@ -1,3 +1,4 @@
+#download dependencies
 import urllib
 from urllib.parse import unquote
 import requests
@@ -8,8 +9,8 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 nltk.download('vader_lexicon')
 
-#level 1 functions
 def get_date_start():
+
     return datetime(
     year=date.today().year, 
     month=date.today().month,

@@ -1,5 +1,5 @@
-//level 1 functions
 async function animation(queries){
+    //hide and
     document.getElementById("play").hidden = true;
     document.getElementById("next").hidden = true;
     document.getElementById("pb1").hidden = true;

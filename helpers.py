@@ -10,20 +10,23 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 nltk.download('vader_lexicon')
 
 def get_date_start():
-
+    """Get start date of query for onload webpage (a year before today)"""
     return datetime(
     year=date.today().year, 
     month=date.today().month,
     day=date.today().day) + timedelta(weeks=-52)
 
 def get_date_end():
+    """Get end date of query for onload webpage (today)"""
     return datetime(
     year=date.today().year, 
     month=date.today().month,
     day=date.today().day)
 
 def get_dates(date_start, date_end, n):
+    """get n dates between the start date and the end date"""
     dates = []
+    #error handling method (if start date is later than end date or either supplied input is later than today)
     if date_end > get_date_end() or date_start > get_date_end() or date_start >= date_end:
         return "DateError"
     span = date_end - date_start
@@ -33,13 +36,16 @@ def get_dates(date_start, date_end, n):
     return dates
 
 def call_api(url, timestamp):
+    """call api using supplied parameters for WaybackScraper"""
     parameters = {
         "url": url,
         "timestamp": get_dtWBM(timestamp)
     }
 
+    #url and parameters for WaybackScraper
     request = requests.get("http://archive.org/wayback/available",params=parameters)
     
+    #if request returns nothing, send
     if request.status_code != 200:
         return {}
     else:

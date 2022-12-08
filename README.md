@@ -12,11 +12,8 @@
 <p>After the animation ends, you have the option to replay the animation by pressing the 'play' button or 'stepping' through the different animations, one at a time. While stepping through the animation, in order to relate the visualization to actual scraped text from the website, the user can see the five longest phrases from a given scrape, five most positive phrases, and five most negative phrases.</p>
 <p>Given that this program uses open-source data from historically-formatted newssites (often with paywalls, as well), certain queries may, well, fail due to a lack of proper data. In this case, change the query date or/and the newssite in order to produce a new query.</p>
 
-## Video
-[See Essence here.](https://youtu.be/6bG_HevbvtM)
-
 ## Files
-* `cs50-final-proj/`
+* `essence/`
     * `README.md`: Readme doc
     * `DESIGN.md`: Design doc
     * `requirements.txt`: Requirements/dependencies for running Essence

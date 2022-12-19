@@ -46,7 +46,7 @@ def index():
         date_start = get_dtSTEP(str(get_date_start()))
         date_end = get_dtSTEP(str(get_date_end()))
         n = 4
-        url = 'https://www.foxnews.com/'
+        url = 'https://www.bbc.com/'
 
     #obtain date range for querying (dates array)
     dates = get_dates(date_start, date_end, n)

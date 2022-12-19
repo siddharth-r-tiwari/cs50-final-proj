@@ -9,7 +9,7 @@ body{
 }
 
 /*Dynamic sizing dependent on width of viewport; if the viewport is smaller than 982 px, the two columns of the webpage are stacked on top of each other*/
-@media screen and (max-width: 982px) {
+@media screen and (max-width: 990px) {
     #left {
         width: 100%;
         position: static;
